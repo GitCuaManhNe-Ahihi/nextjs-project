@@ -8,14 +8,14 @@ const axiosClient = axios.create({
 
 });
 //add a request interceptor
-axiosClient.interceptors.request.use(
-  function(config:any){
-    return config;
-  }
-  , function(error:any){
-    return Promise.reject(error);
-  }
-);
+// axiosClient.interceptors.request.use(
+//   function(config:any){
+//     return config;
+//   }
+//   , function(error:any){
+//     return Promise.reject(error);
+//   }
+// );
 
 axiosClient.interceptors.response.use(
   function(response:any){

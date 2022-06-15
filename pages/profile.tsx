@@ -1,6 +1,6 @@
 import { MainLayout } from '@/components/layout'
-import { useAuth } from 'hooks'
 import styles from '@/styles/profile.module.css'
+import { useAuth } from 'hooks'
 type Props = {}
 
 export default function Profile({}: Props) {

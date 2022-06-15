@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
 import { MainLayout } from "@/components/layout";
-import { Post } from "@/models/index";
+import { Post, server } from "@/models/index";
+import styles from "@/styles/post.module.css";
 import {
   GetStaticPaths, GetStaticProps, GetStaticPropsContext
 } from "next";
-import styles from "@/styles/post.module.css";
+import { useRouter } from "next/router";
 type Props = {
   post: Post;
 };
@@ -34,10 +34,11 @@ export const getStaticProps: GetStaticProps<Props> = async (
   if (!context.params?.postId) {
     return { notFound: true };
   }
-  const res = await fetch('http://localhost:3000/api/posts',{
+  const res = await fetch(`${server}/api/posts`,{
     method: 'GET',
   })
   const data = await res.json()
+
   const post = data?.filter(
     (item: Post) => item.id === context.params?.postId
   )[0];
@@ -50,10 +51,10 @@ export const getStaticProps: GetStaticProps<Props> = async (
   };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch("http://localhost:3000/api/posts", {
-    method: "GET",
-  });
-  const data = await res.json();
+  const res = await fetch(`${server}/api/posts`,{
+    method: 'GET',
+  })
+  const data = await res.json()
   return {
     paths: data.map((item: Post) => ({
       params: { postId: item.id.toString() },

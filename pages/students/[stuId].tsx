@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import { MainLayout } from "@/components/layout";
-import { Student } from "@/models/index";
-import {
-  GetStaticPaths, GetStaticProps, GetStaticPropsContext
-} from "next";
+import { server, Student } from "@/models/index";
 import styles from "@/styles/student.module.css";
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import { useRouter } from "next/router";
 type Props = {
   student: Student;
 };
@@ -33,7 +31,7 @@ export const getStaticProps: GetStaticProps<Props> = async (
   if (!context.params?.stuId) {
     return { notFound: true };
   }
-  const res = await fetch('http://localhost:3000/api/students',{
+  const res = await fetch(`${server}/api/students`,{
     method: 'GET',
   })
   const data = await res.json()
@@ -43,22 +41,22 @@ export const getStaticProps: GetStaticProps<Props> = async (
   console.log(student);
   return {
     props: {
-      student:{...student},
+      student: { ...student },
     },
     revalidate: 100, // In seconds
   };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch("http://localhost:3000/api/students", {
-    method: "GET",
-  });
-  const data = await res.json();
+  const res =  await fetch(`${server}/api/students`,{
+    method: 'GET',
+  })
+  const data = await res.json()
   return {
     paths: data.map((item: Student) => ({
       params: { stuId: item.id.toString() },
     })),
     fallback: true,
   };
-}
+};
 
 Detail.Layout = MainLayout;

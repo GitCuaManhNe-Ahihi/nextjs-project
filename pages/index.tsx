@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import axiosClient from "@/api/axios-client";
 import { MainLayout } from "@/components/layout";
 import { NextPageWithLayout } from "@/models/common";
-import { Post } from "../models";
 import styles from "@/styles/index.module.css";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Post } from "../models";
 
 const Home: NextPageWithLayout = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
     (async () => {
-      const data = await fetch("http://localhost:3000/api/posts", {
-        method: "GET",
-      });
-      const posts = await data.json();
-      setPosts(posts);
+      const {data} =  await axiosClient.get('/posts')
+      setPosts(data);
     })();
   }, []);
 

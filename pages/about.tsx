@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { MainLayout } from '@/components/layout'
-import { Student } from '../models'
 import styles from '@/styles/about.module.css'
+import Link from 'next/link'
+import { server, Student } from '../models'
 type Props = {
   students : Student[]
 }
@@ -30,7 +30,8 @@ export default function About({students}: Props) {
   )
 }
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/students',{
+
+  const res = await fetch(`${server}/api/students`,{
     method: 'GET',
   })
   const students = await res.json()
