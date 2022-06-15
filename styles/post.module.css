@@ -1,0 +1,22 @@
+.container{
+  width: 1200px;
+  height: 400px;
+  background-color: rgb(178, 214, 202);
+  margin: 0 auto;
+  position: relative;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.container a{
+  font-weight: bold;
+  display: inline-block;
+  margin: 20px 0;
+}
+.container a:first-child{
+  font-size: 30px;
+}
+
