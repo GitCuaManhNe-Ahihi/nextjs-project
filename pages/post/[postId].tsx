@@ -1,5 +1,5 @@
 import { MainLayout } from "@/components/layout";
-import { Post, server } from "@/models/index";
+import { Post } from "@/models/index";
 import styles from "@/styles/post.module.css";
 import {
   GetStaticPaths, GetStaticProps, GetStaticPropsContext
@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<Props> = async (
   if (!context.params?.postId) {
     return { notFound: true };
   }
-  const res = await fetch(`${server}/api/posts`,{
+  const res = await fetch(`https://js-post-api.herokuapp.com/api/posts`,{
     method: 'GET',
   })
   const data = await res.json()
@@ -51,8 +51,13 @@ export const getStaticProps: GetStaticProps<Props> = async (
   };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${server}/api/posts`,{
+  const res =  await fetch(`https://js-post-api.herokuapp.com/api/posts`,{
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'User-Agent': '*', // 👈
+    },
   })
   const data = await res.json()
   return {

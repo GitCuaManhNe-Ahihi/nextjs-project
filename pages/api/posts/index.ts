@@ -19,7 +19,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data[]|Error>
 ) {
-  console.log(req.method);
+
   return new Promise((resolve, reject) => {
     try{
       proxy.web(req, res, {

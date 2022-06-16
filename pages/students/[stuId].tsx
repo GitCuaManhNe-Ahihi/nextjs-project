@@ -1,5 +1,5 @@
 import { MainLayout } from "@/components/layout";
-import { server, Student } from "@/models/index";
+import { Student } from "@/models/index";
 import styles from "@/styles/student.module.css";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
@@ -31,14 +31,18 @@ export const getStaticProps: GetStaticProps<Props> = async (
   if (!context.params?.stuId) {
     return { notFound: true };
   }
-  const res = await fetch(`${server}/api/students`,{
+  const res =  await fetch(`https://js-post-api.herokuapp.com/api/students`,{
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'User-Agent': '*', // 👈
+    },
   })
   const data = await res.json()
   const student = data?.filter(
     (item: Student) => item.id === context.params?.stuId
   )[0];
-  console.log(student);
   return {
     props: {
       student: { ...student },
@@ -47,12 +51,17 @@ export const getStaticProps: GetStaticProps<Props> = async (
   };
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res =  await fetch(`${server}/api/students`,{
+  const res =  await fetch(`https://js-post-api.herokuapp.com/api/students`,{
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'User-Agent': '*', // 👈
+    },
   })
   const data = await res.json()
   return {
-    paths: data.map((item: Student) => ({
+    paths: data?.map((item: Student) => ({
       params: { stuId: item.id.toString() },
     })),
     fallback: true,

@@ -1,7 +1,7 @@
 import { MainLayout } from '@/components/layout'
 import styles from '@/styles/about.module.css'
 import Link from 'next/link'
-import { server, Student } from '../models'
+import { Student } from '../models'
 type Props = {
   students : Student[]
 }
@@ -31,7 +31,7 @@ export default function About({students}: Props) {
 }
 export async function getStaticProps() {
 
-  const res = await fetch(`${server}/api/students`,{
+  const res = await fetch(`https://js-post-api.herokuapp.com/api/students`,{
     method: 'GET',
   })
   const students = await res.json()
