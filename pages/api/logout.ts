@@ -23,7 +23,11 @@ export default function handler(
   return new Promise((resolve, reject) => {
     const cookie = new Cookies(req, res);
     cookie.set("accessToken");
-    res.status(200).json("logout successfully");
+    proxy.web(req, res, {
+      target: 'https://js-post-api.herokuapp.com',
+      changeOrigin: true,
+      selfHandleResponse: false,
+    })
   });
 
 }

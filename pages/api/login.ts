@@ -47,7 +47,7 @@ export default function handler(
     };
     proxy.once("proxyRes", handlerLogin);
     proxy.web(req, res, {
-      target: process.env.API_URL,
+      target:  'https://js-post-api.herokuapp.com',
       changeOrigin: true,
       selfHandleResponse: true,
     });
